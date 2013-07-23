@@ -13,36 +13,33 @@
 #include "Console.h"
 
 int main (int argc, char * argv[]) {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	[NSApplication sharedApplication];
-	
-	// Class to manage user interaction
-	Console *console = [[Console alloc] initWithArgc:argc withArgv:argv];
-	if(console == nil) {
-		[pool release];
-		return 1;
+	@autoreleasepool {
+		[NSApplication sharedApplication];
+		
+		// Class to manage user interaction
+		Console *console = [[Console alloc] initWithArgc:argc withArgv:argv];
+		if(console == nil) {
+			return 1;
+		}
+
+		// File reader for standard input
+		NSFileHandle *fileHandle = [NSFileHandle fileHandleWithStandardInput];
+		
+		// Register console for notifications in a non-blocking manner
+		[[NSNotificationCenter defaultCenter] addObserver:console
+												 selector:@selector(dataAvailable:)
+													 name:NSFileHandleDataAvailableNotification
+												   object:fileHandle];
+
+		// Wait for user input on the background thread
+		[fileHandle waitForDataInBackgroundAndNotify];
+		
+		// Run the main event loop (application stays open)
+		[NSApp run];
+		
+		// Proper memory management on closing
+		[[NSNotificationCenter defaultCenter] removeObserver:console];	
+		[fileHandle closeFile];
 	}
-
-	// File reader for standard input
-	NSFileHandle *fileHandle = [[NSFileHandle fileHandleWithStandardInput] retain];
-	
-	// Register console for notifications in a non-blocking manner
-	[[NSNotificationCenter defaultCenter] addObserver:console
-											 selector:@selector(dataAvailable:)
-												 name:NSFileHandleDataAvailableNotification
-											   object:fileHandle];
-
-	// Wait for user input on the background thread
-	[fileHandle waitForDataInBackgroundAndNotify];
-	
-	// Run the main event loop (application stays open)
-	[NSApp run];
-	
-	// Proper memory management on closing
-	[[NSNotificationCenter defaultCenter] removeObserver:console];	
-	[fileHandle closeFile];
-	[fileHandle release];
-	[console release];
-	[pool drain];
     return 0;
 }

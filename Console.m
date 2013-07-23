@@ -21,7 +21,6 @@
 		if (argc < 2 || argv[argc-1][0] == '-') {
 			// If an error occurs here, send a [self release] message and return nil.
 			NSLog(@"ERROR: Please specify a proper output file as the only parameter (ex: './mac-screen-recorder movie.mov')");
-			[self release];
 			return nil;
 		} else {
 			NSLog(@"Please type a command (i.e. 'help'):");
@@ -36,11 +35,10 @@
 		}
 		
 		// Get the path and name of the output file
-		mOutputFilePath = [[[NSString alloc] initWithCString: argv[argc-1]] autorelease];
+		mOutputFilePath = [[NSString alloc] initWithCString: argv[argc-1]];
 		
 		mRecorder = [[ScreenRecorder alloc] init:captureAudio];
 		if(mRecorder == nil) {
-			[self release];
 			return nil;
 		}
 	}
@@ -84,19 +82,13 @@
 	if ([dataString isEqualToString:@"quit\n"]) {
 		NSLog(@"Goodbye");
 		[NSApp terminate:self];
-		[dataString release];
 	} else {
 		//Clean up the string
-		[dataString release];
 		
 		//the waitFor... method only works once, so reregister.
 		[[notification object] waitForDataInBackgroundAndNotify];
 	}
 }
 
-- (void)dealloc {
-	[mRecorder release];
-	[super dealloc];
-}
 
 @end

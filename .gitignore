@@ -5,3 +5,5 @@ build/*
 *~.nib
 *~.xib
 .DS_Store
+mac-screen-recorder.xcodeproj/xcuserdata/*
+mac-screen-recorder.xcodeproj/project.xcworkspace/xcuserdata/*

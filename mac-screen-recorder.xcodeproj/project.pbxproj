@@ -125,7 +125,11 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB928908733DD80010E9CD /* Build configuration list for PBXProject "mac-screen-recorder" */;
 			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				en,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* mac-screen-recorder */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -153,6 +157,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_ENABLE_FIX_AND_CONTINUE = YES;
@@ -162,6 +168,7 @@
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				PRODUCT_NAME = "mac-screen-recorder";
+				SDKROOT = macosx;
 			};
 			name = Debug;
 		};
@@ -169,10 +176,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_MODEL_TUNING = G5;
 				INSTALL_PATH = /usr/local/bin;
 				PRODUCT_NAME = "mac-screen-recorder";
+				SDKROOT = macosx;
 			};
 			name = Release;
 		};

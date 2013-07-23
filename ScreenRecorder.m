@@ -32,7 +32,6 @@
 		success = [mCaptureSession addInput:mCaptureScreenInput error:&error];
 		if (!success) {
 			NSLog(@"Could not attach the screen input to the capture session!");
-			[self release];
 			return nil;
 		}
 		if(error != nil) {
@@ -45,7 +44,6 @@
 			success = [audioDevice open:&error];
 			if(!success) {
 				NSLog(@"Could not start the audio device!");
-				[self release];
 				return nil;
 			}
 			
@@ -54,7 +52,6 @@
 			success = [mCaptureSession addInput:mCaptureAudioDeviceInput error:&error];
 			if (!success) {
 				NSLog(@"Could not attach the audio device to the capture session!");
-				[self release];
 				return nil;
 			}
 		}
@@ -67,7 +64,6 @@
 		success = [mCaptureSession addOutput:mCaptureMovieFileOutput error:&error];
 		if(!success) {
 			NSLog(@"Could not obtain a file output the capture session!");
-			[self release];
 			return nil;
 		}
 		if(error != nil) {
@@ -105,7 +101,6 @@
 
 		return self;
     } else {
-		[self release];
 		return nil;
 	}
 }
@@ -139,13 +134,5 @@
 	// [[NSWorkspace sharedWorkspace] openURL:outputFileURL]; // opens file in Quicktime Player
 }
 
--(void)dealloc
-{
-	[mCaptureSession release];
-	[mCaptureAudioDeviceInput release];
-	[mCaptureMovieFileOutput release];
-	[mCaptureScreenInput release];
-	[super dealloc];
-}
 
 @end
