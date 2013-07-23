@@ -35,7 +35,7 @@
 		}
 		
 		// Get the path and name of the output file
-		mOutputFilePath = [[NSString alloc] initWithCString: argv[argc-1]];
+        mOutputFilePath = [NSString stringWithCString:argv[argc-1] encoding:NSUTF8StringEncoding];
 		
 		mRecorder = [[ScreenRecorder alloc] init:captureAudio];
 		if(mRecorder == nil) {
@@ -74,7 +74,7 @@
 	}
 	else if(![dataString isEqualToString:@"quit\n"]) {
 		[mRecorder stopRecording];
-		NSLog(@"Unknown command: '%s' \n",dataString);
+		NSLog(@"Unknown command: '%@' \n",dataString);
 	}
 	
 	
